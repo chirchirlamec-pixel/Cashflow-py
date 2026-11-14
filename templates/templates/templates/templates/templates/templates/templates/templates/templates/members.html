@@ -1,0 +1,8 @@
+{% extends "base.html" %}{% block title %}Members - {{ site }}{% endblock %}
+{% block body %}<h1>Members</h1>
+<form class="row panel" method="get"><label>Search name or phone<input name="q" value="{{ q }}"></label>
+<label>Status<select name="status"><option value="">All</option>{% for s in ['active','pending','suspended'] %}<option {{ 'selected' if status==s }}>{{ s }}</option>{% endfor %}</select></label><button class="btn" style="flex:0 0 auto">Filter</button></form>
+<div class="panel"><div class="tw"><table><thead><tr><th>Name</th><th>Phone</th><th>Joined (UTC)</th><th>Status</th><th>Change</th></tr></thead><tbody>
+{% for m in rows %}<tr><td>{{ m['name'] }}</td><td>{{ m['phone'] }}</td><td>{{ m['created_at'][:10] }}</td><td><span class="pill {{ m['status'] }}">{{ m['status'] }}</span></td>
+<td>{% for s in ['active','suspended','pending'] if s!=m['status'] %}<form class="inline" method="post" action="{{ url_for('admin_member_status', mid=m['id']) }}"><input type="hidden" name="csrf" value="{{ csrf() }}"><input type="hidden" name="status" value="{{ s }}"><button class="btn l sm">{{ s|capitalize }}</button></form> {% endfor %}</td></tr>
+{% else %}<tr><td colspan="5" class="fine">No members found.</td></tr>{% endfor %}</tbody></table></div></div>{% endblock %}
