@@ -1,0 +1,20 @@
+{% extends "base.html" %}{% block title %}Insights - {{ site }}{% endblock %}
+{% block body %}
+<h1>Insights</h1><p class="sub">Last 30 days (UTC). Administrator: {{ sponsor }}.</p>
+<div class="grid">
+ <div class="stat"><small>Members</small><strong>{{ d.kpi.members }}</strong></div>
+ <div class="stat"><small>Active</small><strong>{{ d.kpi.active }}</strong></div>
+ <div class="stat"><small>Conversion</small><strong>{{ d.kpi.conversion }}%</strong></div>
+ <div class="stat"><small>Payments to review</small><strong>{{ d.kpi.pending_payments }}</strong></div>
+ <div class="stat"><small>Revenue (30 days)</small><strong>KSh {{ '{:,}'.format(d.kpi.revenue_30d) }}</strong></div>
+ <div class="stat"><small>Revenue (all time)</small><strong>KSh {{ '{:,}'.format(d.kpi.revenue_total) }}</strong></div>
+ <div class="stat"><small>Avg. approval time</small><strong>{{ d.kpi.avg_hours }} h</strong></div>
+</div>
+{% if d.kpi.pending_payments %}<div class="flash ok"><a href="{{ url_for('admin_payments') }}">{{ d.kpi.pending_payments }} payment(s) are waiting for your approval.</a></div>{% endif %}
+<div class="grid two">
+ <div class="panel"><h2>New members per day</h2>{{ charts.signups }}</div>
+ <div class="panel"><h2>Approved revenue per day (KSh)</h2>{{ charts.revenue }}</div>
+ <div class="panel"><h2>Members by status</h2>{{ charts.members }}</div>
+ <div class="panel"><h2>Payments by status</h2>{{ charts.payments }}</div>
+</div>
+{% endblock %}
