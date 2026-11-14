@@ -1,0 +1,10 @@
+{% extends "base.html" %}{% block title %}Settings - {{ site }}{% endblock %}
+{% block body %}<h1>Payment settings</h1><p class="sub">What members see when they pay. Prefer a registered Till or Paybill number over a personal line.</p>
+<div class="panel"><form method="post"><input type="hidden" name="csrf" value="{{ csrf() }}">
+<div class="row"><label>Access fee (KSh)<input name="fee" type="number" min="1" value="{{ s.fee }}" required></label>
+<label>Method name<input name="method_label" value="{{ s.method_label }}" placeholder="M-Pesa Till"></label>
+<label>Pay to (number)<input name="payee" value="{{ s.payee }}" placeholder="Till / Paybill / phone"></label></div>
+<label>Instructions shown to members<textarea name="instructions" rows="2">{{ s.instructions }}</textarea></label>
+<button class="btn">Save</button></form></div>
+<div class="panel"><h2>Automatic confirmation (M-Pesa STK push)</h2>
+<p class="sub">{% if stk %}<span class="pill approved">enabled</span> Members can pay with a phone prompt and payments are confirmed automatically.{% else %}<span class="pill pending">not set up</span> Add the DARAJA_* settings from the README to turn on automatic confirmation. Until then you approve payments by hand.{% endif %}</p></div>{% endblock %}
