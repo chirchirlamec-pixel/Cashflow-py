@@ -1,0 +1,7 @@
+{% extends "base.html" %}{% block title %}Activity - {{ site }}{% endblock %}
+{% block body %}<h1>Activity</h1>
+<div class="panel"><h2>Messages from visitors</h2><div class="tw"><table><thead><tr><th>When</th><th>Name</th><th>Phone</th><th>Message</th></tr></thead><tbody>
+{% for m in msgs %}<tr><td>{{ m['created_at'][:16] }}</td><td>{{ m['name'] }}</td><td>{{ m['phone'] }}</td><td>{{ m['body'] }}</td></tr>{% else %}<tr><td colspan="4" class="fine">No messages.</td></tr>{% endfor %}</tbody></table></div></div>
+<div class="panel"><h2>Audit log</h2><div class="tw"><table><thead><tr><th>When (UTC)</th><th>Who</th><th>Action</th><th>Detail</th></tr></thead><tbody>
+{% for r in rows %}<tr><td>{{ r['ts'] }}</td><td>{{ r['actor'] }}</td><td>{{ r['action'] }}</td><td>{{ r['detail'] }}</td></tr>{% else %}<tr><td colspan="4" class="fine">Nothing yet.</td></tr>{% endfor %}</tbody></table></div></div>
+{% endblock %}
